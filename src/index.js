@@ -1,6 +1,6 @@
 module.exports = function solveSudoku(matrix) {
   var arr = matrix;
-  function testForEdges(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2) {
+  function testForEdges(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, arr) {
     var missingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for(i = i1; i < i2; i++) {
       for(j = j1; j < j2; j++) {
@@ -51,7 +51,7 @@ module.exports = function solveSudoku(matrix) {
     }
   };
 
-  function testForCenters(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, v1, v2, d1, d2, m1, m2) {
+  function testForCenters(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, v1, v2, d1, d2, m1, m2, arr) {
     var missingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for(i = i1; i < i2; i++) {
       for(j = j1; j < j2; j++) {
@@ -111,7 +111,7 @@ module.exports = function solveSudoku(matrix) {
     }
   }
 
-  function testForCenters2(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, v1, v2, d1, d2, m1, m2) {
+  function testForCenters2(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, v1, v2, d1, d2, m1, m2, arr) {
     var missingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for(i = i1; i < i2; i++) {
       for(j = j1; j < j2; j++) {
@@ -171,7 +171,7 @@ module.exports = function solveSudoku(matrix) {
     }
   }
 
-  function testForMainCenter(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, v1, v2, d1, d2, m1, m2, g1, g2, f1, f2, e1, e2) {
+  function testForMainCenter(i1, i2, j1, j2, k1, z1, z2, x1, x2, l1, l2, a1, a2, b1, b2, c1, c2, v1, v2, d1, d2, m1, m2, g1, g2, f1, f2, e1, e2, arr) {
     var missingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for(i = i1; i < i2; i++) {
       for(j = j1; j < j2; j++) {
@@ -242,142 +242,18 @@ module.exports = function solveSudoku(matrix) {
   var n = 10;
   while(n > 1) {
     --n;
-    testForEdges(0, 3, 0, 3, 0, 0, 3, 3, 9, 0, 3, 0, 3, 3, 9, 0, 3);
-    testForEdges(0, 3, 6, 9, 0, 0, 3, 0, 6, 6, 9, 6, 9, 3, 9, 0, 3);
-    testForEdges(6, 9, 0, 3, 0, 6, 9, 3, 9, 0, 3, 0, 3, 0, 6, 6, 9);
-    testForEdges(6, 9, 6, 9, 0, 6, 9, 0, 6, 6, 9, 6, 9, 0, 6, 6, 9);
+    testForEdges(0, 3, 0, 3, 0, 0, 3, 3, 9, 0, 3, 0, 3, 3, 9, 0, 3, arr);
+    testForEdges(0, 3, 6, 9, 0, 0, 3, 0, 6, 6, 9, 6, 9, 3, 9, 0, 3, arr);
+    testForEdges(6, 9, 0, 3, 0, 6, 9, 3, 9, 0, 3, 0, 3, 0, 6, 6, 9, arr);
+    testForEdges(6, 9, 6, 9, 0, 6, 9, 0, 6, 6, 9, 6, 9, 0, 6, 6, 9, arr);
 
-    /*for(i = 0; i < arr.length; i++) {
-      var missingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-      var indicesEmptyEl = [];
-      for(j = 0; j < arr[i].length; j++) {
-        var test = false;
-        for(k = 0; k < missingItems.length; k++) {
-          if( missingItems[k] == arr[i][j] ) {
-            missingItems.splice(k, 1);
-            test = true;
-          };
-        };
-        if(!test) indicesEmptyEl.push(j);
-      };
 
-      for(j = 0; j < indicesEmptyEl.length; j++) {
+    testForCenters(3, 6, 0, 3, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3, arr);
+    testForCenters(3, 6, 6, 9, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9, arr);
+    testForCenters2(0, 3, 3, 6, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3, arr);
+    testForCenters2(6, 9, 3, 6, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9, arr);
 
-        var trueEl = [];
-        for(k = 0; k < missingItems.length; k++) {
-
-          var counter = 0;
-
-          var counterForColumn = 0;
-          for(l = 1; l < arr.length; l++) {
-            if(arr[l][indicesEmptyEl[j]] == missingItems[k]) break;
-            if(arr[l][indicesEmptyEl[j]] != missingItems[k]) counterForColumn++;
-          };
-          if(counterForColumn == 8) counter++;
-
-          if(indicesEmptyEl[j] < 3 && i < 3) {
-            var state = true;
-            for(l = 0; l < 3; l++) {
-              for(r = 0; r < 3; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if( (indicesEmptyEl[j] > 2 && indicesEmptyEl[j] < 6) && i < 3) {
-            var state = true;
-            for(l = 0; l < 3; l++) {
-              for(r = 3; r < 6; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if(indicesEmptyEl[j] > 5 && i < 3) {
-            var state = true;
-            for(l = 0; l < 3; l++) {
-              for(r = 6; r < 9; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if( indicesEmptyEl[j] < 3 && (i > 2 && i < 6) ) {
-            var state = true;
-            for(l = 3; l < 6; l++) {
-              for(r = 0; r < 3; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if( (indicesEmptyEl[j] > 2 && indicesEmptyEl[j] < 6) && (i > 2 && i < 6) ) {
-            var state = true;
-            for(l = 3; l < 6; l++) {
-              for(r = 3; r < 6; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if(indicesEmptyEl[j] > 5 && (i > 2 && i < 6) ) {
-            var state = true;
-            for(l = 3; l < 6; l++) {
-              for(r = 6; r < 9; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if(indicesEmptyEl[j] < 3 && i > 5) {
-            var state = true;
-            for(l = 6; l < 9; l++) {
-              for(r = 0; r < 3; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if( (indicesEmptyEl[j] > 2 && indicesEmptyEl[j] < 6) && i > 5) {
-            var state = true;
-            for(l = 6; l < 9; l++) {
-              for(r = 3; r < 6; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if(indicesEmptyEl[j] > 5 && i > 5) {
-            var state = true;
-            for(l = 6; l < 9; l++) {
-              for(r = 6; r < 9; r++) {
-                if(arr[l][r] == missingItems[k]) state = false;
-              };
-            };
-            if(state) counter++;
-          };
-
-          if(counter == 2) trueEl.push(missingItems[k]);
-        };
-
-        if(trueEl.length == 1) arr[i][indicesEmptyEl[j]] = trueEl[0];
-      };
-    };*/
-
-    testForCenters(3, 6, 0, 3, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3);
-    testForCenters(3, 6, 6, 9, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9);
-    testForCenters2(0, 3, 3, 6, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3);
-    testForCenters2(6, 9, 3, 6, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9);
-
-    testForMainCenter(3, 6, 3, 6, 0, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6);
+    testForMainCenter(3, 6, 3, 6, 0, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6, arr);
   }
 
   var counter = 0;
@@ -395,73 +271,113 @@ module.exports = function solveSudoku(matrix) {
     }
   }
 
-  (function testing(arr, arr2) {
+  var matrix2 = [];
+  matrix2.push(arr);
 
-    for(i = 0; i < arr.length; i++) {
+  function testing(arr, matrix2) {
+
+    for(q = 0; q < arr.length; q++) {
 
       var missingItems = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-      for(j = 0; j < arr[i].length; j++) {
+      for(j = 0; j < arr[q].length; j++) {
         for(z = 0; z < missingItems.length; z++) {
-          if(arr[i][j] == missingItems[z]) {
+          if(arr[q][j] == missingItems[z]) {
             missingItems.splice(z, 1);
           }
         }
       }
       if(missingItems.length) {
-        for(j = 0; j < arr[i].length; j++) {
-          if(!arr[i][j]) {
+        count = missingItems.length;
+        for(g = 0; g < arr[q].length; g++) {
+          if(!arr[q][g]) {
 
-            for(z = 0; z < missingItems.length; z++) {
-              arr[i][j] = missingItems[z];
+            for(o = 0; o < missingItems.length; o++) {
 
-              var counter1 = 0;
-              for(i = 0; i < arr.length; i++) {
-                for(j = 0; j < arr[i].length; j++) {
-                   if(!arr[i][j]) counter1++;
+              var array = [[], [], [], [], [], [], [], [], []];
+              for(f = 0; f < arr.length; f++) {
+                for(p = 0; p < arr[f].length; p++) {
+                  array[f][p] = arr[f][p];
                 }
               }
+
+              var counter3 = 0;
+              for(d = q; d < q + 1; d++) {
+                for(k = 0; k < array[q].length; k++) {
+                  if(missingItems[o] == array[d][k]) counter3++;
+                }
+              }
+              for(d = j; d < j + 1; d++) {
+                for(k = 0; k < array.length; k++) {
+                  if(missingItems[o] == array[k][d]) counter3++;
+                }
+              }
+
+              if(counter3) continue;
+              array[q][g] = missingItems[o];
+
+              var counter4 = 0;
+              for(i = 0; i < array.length; i++) {
+                for(j = 0; j < array[i].length; j++) {
+                  if(!array[i][j]) counter4++;
+                }
+              }
+
               var n = 10;
               while(n > 1) {
                 --n;
-                testForEdges(0, 3, 0, 3, 0, 0, 3, 3, 9, 0, 3, 0, 3, 3, 9, 0, 3);
-                testForEdges(0, 3, 6, 9, 0, 0, 3, 0, 6, 6, 9, 6, 9, 3, 9, 0, 3);
-                testForEdges(6, 9, 0, 3, 0, 6, 9, 3, 9, 0, 3, 0, 3, 0, 6, 6, 9);
-                testForEdges(6, 9, 6, 9, 0, 6, 9, 0, 6, 6, 9, 6, 9, 0, 6, 6, 9);
+                testForEdges(0, 3, 0, 3, 0, 0, 3, 3, 9, 0, 3, 0, 3, 3, 9, 0, 3, array);
+                testForEdges(0, 3, 6, 9, 0, 0, 3, 0, 6, 6, 9, 6, 9, 3, 9, 0, 3, array);
+                testForEdges(6, 9, 0, 3, 0, 6, 9, 3, 9, 0, 3, 0, 3, 0, 6, 6, 9, array);
+                testForEdges(6, 9, 6, 9, 0, 6, 9, 0, 6, 6, 9, 6, 9, 0, 6, 6, 9, array);
 
-                testForCenters(3, 6, 0, 3, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3);
-                testForCenters(3, 6, 6, 9, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9);
-                testForCenters2(0, 3, 3, 6, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3);
-                testForCenters2(6, 9, 3, 6, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9);
 
-                testForMainCenter(3, 6, 3, 6, 0, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6);
+                testForCenters(3, 6, 0, 3, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3, array);
+                testForCenters(3, 6, 6, 9, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9, array);
+                testForCenters2(0, 3, 3, 6, 0, 0, 3, 0, 3, 3, 6, 0, 3, 6, 9, 3, 6, 3, 6, 3, 9, 0, 3, array);
+                testForCenters2(6, 9, 3, 6, 0, 6, 9, 0, 3, 3, 6, 6, 9, 6, 9, 3, 6, 3, 6, 0, 6, 6, 9, array);
+
+                testForMainCenter(3, 6, 3, 6, 0, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6, 3, 6, 0, 3, 3, 6, 3, 6, 6, 9, 3, 6, array);
               }
 
-              var counter2 = 0;
-              for(i = 0; i < arr.length; i++) {
-                for(j = 0; j < arr[i].length; j++) {
-                   if(!arr[i][j]) counter2++;
+              var counter5 = 0;
+              for(i = 0; i < array.length; i++) {
+                for(j = 0; j < array[i].length; j++) {
+                  if(!array[i][j]) counter4++;
                 }
               }
+              if(counter4 == counter5) continue;
 
-              /*if( counter2 &&  !(counter1 - counter2) ) {
-                var arr = [[], [], [], [], [], [], [], [], []];
-                for(i = 0; i < arr2.length; i++) {
-                  for(j = 0; j < arr2[i].length; j++) {
-                    arr[i][j] = arr2[i][j];
-                  }
-                }
-                continue;
-              }*/if (counter2) {
-                return testing(arr, arr2);
-              } else {
+              matrix2.push(array);
 
-                return arr;
-              }
             }
+            return;
           }
         }
       }
     }
-  })(arr, arr2);
-  return arr;
+  };
+
+    for(y = 0; y < matrix2.length; y++) {
+      if(y > 20) return;
+      testing(matrix2[y], matrix2);
+
+      var check = true;
+      for(t = 0; t < matrix2[y].length; t++) {
+        for(w = 0; w < matrix2[y][t].length; w++) {
+          if(!matrix2[y][t][w]) check = false;
+        }
+      }
+
+      var count = 0;
+      for(t = 0; t < matrix2[y].length; t++) {
+        var sum = 0;
+        for(w = 0; w < matrix2[y][t].length; w++) {
+          sum += matrix2[y][w][t];
+        }
+        if(sum == 45) count++;
+      }
+
+      if(check && (count == 9)) return matrix2[y];
+    }
+
 }
