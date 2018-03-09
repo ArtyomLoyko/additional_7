@@ -239,7 +239,7 @@ module.exports = function solveSudoku(matrix) {
       }
     }
   }
-  var n = 10;
+  var n = 5;
   while(n > 1) {
     --n;
     testForEdges(0, 3, 0, 3, 0, 0, 3, 3, 9, 0, 3, 0, 3, 3, 9, 0, 3, arr);
@@ -263,13 +263,6 @@ module.exports = function solveSudoku(matrix) {
     }
   }
   if(!counter) return arr;
-
-  var arr2 = [[], [], [], [], [], [], [], [], []];
-  for(i = 0; i < arr.length; i++) {
-    for(j = 0; j < arr[i].length; j++) {
-      arr2[i][j] = arr[i][j];
-    }
-  }
 
   var matrix2 = [];
   matrix2.push(arr);
@@ -322,7 +315,7 @@ module.exports = function solveSudoku(matrix) {
                 }
               }
 
-              var n = 10;
+              var n = 5;
               while(n > 1) {
                 --n;
                 testForEdges(0, 3, 0, 3, 0, 0, 3, 3, 9, 0, 3, 0, 3, 3, 9, 0, 3, array);
@@ -357,27 +350,30 @@ module.exports = function solveSudoku(matrix) {
     }
   };
 
-    for(y = 0; y < matrix2.length; y++) {
-      if(y > 20) return;
-      testing(matrix2[y], matrix2);
+  for(y = 0; y < matrix2.length; y++) {
+    if(y > 100) return;
+    testing(matrix2[y], matrix2);
+    for(bb = 0; bb < matrix2.length; bb++) {
 
       var check = true;
-      for(t = 0; t < matrix2[y].length; t++) {
-        for(w = 0; w < matrix2[y][t].length; w++) {
-          if(!matrix2[y][t][w]) check = false;
+      for(t = 0; t < matrix2[bb].length; t++) {
+        for(w = 0; w < matrix2[bb][t].length; w++) {
+          if(!matrix2[bb][t][w]) check = false;
         }
       }
 
       var count = 0;
-      for(t = 0; t < matrix2[y].length; t++) {
+      for(t = 0; t < matrix2[bb].length; t++) {
         var sum = 0;
-        for(w = 0; w < matrix2[y][t].length; w++) {
-          sum += matrix2[y][w][t];
+        for(w = 0; w < matrix2[bb][t].length; w++) {
+          sum += matrix2[bb][w][t];
         }
         if(sum == 45) count++;
       }
 
-      if(check && (count == 9)) return matrix2[y];
+      if(check && (count == 9)) return matrix2[bb];
     }
+
+  }
 
 }
